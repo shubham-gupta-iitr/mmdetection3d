@@ -62,6 +62,10 @@ def nuscenes_data_prep(root_path,
         out_dir (str): Output directory of the groundtruth database info.
         max_sweeps (int): Number of input consecutive frames. Default: 10
     """
+    print(root_path)
+    print(info_prefix)
+    print(version)
+    print(max_sweeps)
     nuscenes_converter.create_nuscenes_infos(
         root_path, info_prefix, version=version, max_sweeps=max_sweeps)
 
@@ -230,13 +234,13 @@ if __name__ == '__main__':
             out_dir=args.out_dir)
     elif args.dataset == 'nuscenes' and args.version != 'v1.0-mini':
         train_version = f'{args.version}-trainval'
-        nuscenes_data_prep(
-            root_path=args.root_path,
-            info_prefix=args.extra_tag,
-            version=train_version,
-            dataset_name='NuScenesDataset',
-            out_dir=args.out_dir,
-            max_sweeps=args.max_sweeps)
+        # nuscenes_data_prep(
+        #     root_path=args.root_path,
+        #     info_prefix=args.extra_tag,
+        #     version=train_version,
+        #     dataset_name='NuScenesDataset',
+        #     out_dir=args.out_dir,
+        #     max_sweeps=args.max_sweeps)
         test_version = f'{args.version}-test'
         nuscenes_data_prep(
             root_path=args.root_path,

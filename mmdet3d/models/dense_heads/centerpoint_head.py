@@ -633,6 +633,7 @@ class CenterHead(nn.Module):
                 batch_vel = preds_dict[0]['vel']
             else:
                 batch_vel = None
+            
             temp = self.bbox_coder.decode(
                 batch_heatmap,
                 batch_rots,
@@ -642,6 +643,7 @@ class CenterHead(nn.Module):
                 batch_vel,
                 reg=batch_reg,
                 task_id=task_id)
+            
             assert self.test_cfg['nms_type'] in ['circle', 'rotate']
             batch_reg_preds = [box['bboxes'] for box in temp]
             batch_cls_preds = [box['scores'] for box in temp]

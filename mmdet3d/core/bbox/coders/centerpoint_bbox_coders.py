@@ -196,13 +196,14 @@ class CenterPointBBoxCoder(BaseBBoxCoder):
             thresh_mask = final_scores > self.score_threshold
 
         if self.post_center_range is not None:
+            
             self.post_center_range = torch.tensor(
                 self.post_center_range, device=heat.device)
             mask = (final_box_preds[..., :3] >=
                     self.post_center_range[:3]).all(2)
             mask &= (final_box_preds[..., :3] <=
                      self.post_center_range[3:]).all(2)
-
+            
             predictions_dicts = []
             for i in range(batch):
                 cmask = mask[i, :]
@@ -219,9 +220,10 @@ class CenterPointBBoxCoder(BaseBBoxCoder):
                 }
 
                 predictions_dicts.append(predictions_dict)
+        
         else:
             raise NotImplementedError(
                 'Need to reorganize output as a batch, only '
                 'support post_center_range is not None for now!')
-
+        
         return predictions_dicts

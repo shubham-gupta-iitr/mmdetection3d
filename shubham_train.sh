@@ -1,0 +1,1 @@
+sh tools/slurm_train.sh short mmdet3d_cp_fpn configs/centerpoint/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus.py train_cp_dist_80/

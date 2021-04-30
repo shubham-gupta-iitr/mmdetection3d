@@ -9,8 +9,9 @@ from mmdet.datasets import DATASETS
 from ..core import show_result
 from ..core.bbox import Box3DMode, Coord3DMode, LiDARInstance3DBoxes
 from .custom_3d import Custom3DDataset
-
-
+import os
+import pickle as pkl
+import json
 @DATASETS.register_module()
 class NuScenesDataset(Custom3DDataset):
     r"""NuScenes Dataset.
@@ -302,9 +303,11 @@ class NuScenesDataset(Custom3DDataset):
         mapped_class_names = self.CLASSES
 
         print('Start to convert detection format...')
-        for sample_id, det in enumerate(mmcv.track_iter_progress(results)):
+        
+        for sample_id, det in enumerate(results):
             annos = []
-            boxes = output_to_nusc_box(det)
+            boxes = output_to_nusc_box(det['pts_bbox'])
+            #boxes = output_to_nusc_box(det)
             sample_token = self.data_infos[sample_id]['token']
             boxes = lidar_nusc_box_to_global(self.data_infos[sample_id], boxes,
                                              mapped_class_names,
@@ -348,12 +351,13 @@ class NuScenesDataset(Custom3DDataset):
             'meta': self.modality,
             'results': nusc_annos,
         }
-
-        mmcv.mkdir_or_exist(jsonfile_prefix)
-        res_path = osp.join(jsonfile_prefix, 'results_nusc.json')
-        print('Results writes to', res_path)
-        mmcv.dump(nusc_submissions, res_path)
-        return res_path
+        
+        filename = "results_nusc_fpn.json"
+        print('Results writes to', filename)
+        
+        
+        mmcv.dump(nusc_submissions, filename)
+        
 
     def _evaluate_single(self,
                          result_path,
@@ -430,7 +434,7 @@ class NuScenesDataset(Custom3DDataset):
 
         if jsonfile_prefix is None:
             tmp_dir = tempfile.TemporaryDirectory()
-            jsonfile_prefix = osp.join(tmp_dir.name, 'results')
+            jsonfile_prefix = osp.join(tmp_dir.name, 'results_self_trained')
         else:
             tmp_dir = None
 

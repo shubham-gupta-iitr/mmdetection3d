@@ -12,6 +12,7 @@ CPUS_PER_TASK=${CPUS_PER_TASK:-5}
 SRUN_ARGS=${SRUN_ARGS:-""}
 PY_ARGS=${@:5}
 
+
 PYTHONPATH="$(dirname $0)/..":$PYTHONPATH \
 srun -p ${PARTITION} \
     --job-name=${JOB_NAME} \
@@ -19,6 +20,8 @@ srun -p ${PARTITION} \
     --ntasks=${GPUS} \
     --ntasks-per-node=${GPUS_PER_NODE} \
     --cpus-per-task=${CPUS_PER_TASK} \
+    --mem=400G \
+    --time=60:00:00 \
     --kill-on-bad-exit=1 \
     ${SRUN_ARGS} \
     python -u tools/train.py ${CONFIG} --work-dir=${WORK_DIR} --launcher="slurm" ${PY_ARGS}

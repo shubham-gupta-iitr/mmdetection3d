@@ -39,6 +39,8 @@ def create_nuscenes_infos(root_path,
             Default: 10
     """
     from nuscenes.nuscenes import NuScenes
+    print(root_path)
+    print(version)
     nusc = NuScenes(version=version, dataroot=root_path, verbose=True)
     from nuscenes.utils import splits
     available_vers = ['v1.0-trainval', 'v1.0-test', 'v1.0-mini']
