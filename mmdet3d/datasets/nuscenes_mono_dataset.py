@@ -75,7 +75,8 @@ class NuScenesMonoDataset(CocoDataset):
         self.with_velocity = with_velocity
         self.modality = modality
         self.box_type_3d, self.box_mode_3d = get_box_type(box_type_3d)
-        self.eval_version = eval_version
+        #self.eval_version = eval_version
+        self.eval_version = "self_80_above"
         self.use_valid_flag = use_valid_flag
         self.bbox_code_size = 9
         self.version = version
@@ -464,7 +465,9 @@ class NuScenesMonoDataset(CocoDataset):
                     continue
                 print(f'\nFormating bboxes of {name}')
                 results_ = [out[name] for out in results]
-                tmp_file_ = osp.join(jsonfile_prefix, name)
+
+                #tmp_file_ = osp.join(jsonfile_prefix, name)
+                tmp_file_ = osp.join(name)
                 result_files.update(
                     {name: self._format_bbox(results_, tmp_file_)})
 

@@ -1,0 +1,1 @@
+sh tools/slurm_train.sh long mmdet3d_fcos /project_data/ramanan/shubham/mmdetection3d/configs/fcos3d/fcos3d_r101_caffe_fpn_gn-head_dcn_2x8_1x_nus-mono3d.py train_fcos_dist_80/

@@ -128,7 +128,8 @@ class NuScenesDataset(Custom3DDataset):
             test_mode=test_mode)
 
         self.with_velocity = with_velocity
-        self.eval_version = eval_version
+        #self.eval_version = eval_version
+        self.eval_version = "self_80_above"
         from nuscenes.eval.detection.config import config_factory
         self.eval_detection_configs = config_factory(self.eval_version)
         if self.modality is None:
